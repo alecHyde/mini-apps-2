@@ -13,7 +13,7 @@
     console.log('second request made')
 
     let options = {
-      url: 'https://api.coindesk.com/v1/bpi/historical/close.json?for=yesterday'
+      url: 'https://api.coindesk.com/v1/bpi/historical/close.json'
     }
 
     let callback = (error, response, body) => {
