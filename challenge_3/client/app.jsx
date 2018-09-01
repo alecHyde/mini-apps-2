@@ -9,38 +9,36 @@ class App extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.countShot = this.countShot.bind(this);
     this.isLegalShot = this.isLegalShot.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.resetGame = this.resetGame.bind(this);
     this.countScore = this.countScore.bind(this)
     this.state = {
       shots: [],
       score: [],
-      frame: 1,
-      firstShot: true,
-      count: 1,
-      bonus: 0,
-      gameNotOver: true,
-      initialShot: true
-
+      shotCount: 1,
+      gameOver: false
     }
   }
 
   handleClick(e) {
     let bowl = Number(e.target.innerHTML)
+    let lastShot = this.state.shots[this.state.shots.length - 1]
     if(this.isLegalShot(bowl)) {
       this.countShot(bowl)  
     } else { 
-      window.alert(`Not a legal shot, ${bowl} rolled`)
+      window.alert(`Woopsies! That's not a legal shot. You rolled a ${lastShot} on your first shot.`)
     }
   }
 
   isLegalShot(num) {
-    if(this.state.firstShot) {
+    if(this.state.shotCount % 2 === 1 || this.state.shotCount === 1) {
+      console.log('GETS a pass',  this.state.shotCount % 2)
       return true;
     } else {
+      console.log('NUMEBR TO JUDGE ON', this.state.shotCount % 2)
       let firstShot = this.state.shots[this.state.shots.length - 1]
       console.log('firstShot', firstShot)
       console.log('sum', firstShot + num)
-      if(Number(firstShot) + Number(num) <= 10) {
+      if(firstShot + num <= 10) {
         return true;
       } else {
         return false;
@@ -50,27 +48,29 @@ class App extends React.Component {
 
 
   countShot(num) {
-    //need to toggle firstShot state
-    // let prevScore = this.state.score;
-    // let prevShots = this.state.shots;
-    // let newShots = null;
-    // let arr = [];
-    // if(typeof prevShots === 'object') {
-    //   newShots = prevShots.push(num);
-    // } else {
-    //   newShots = arr.push(num);
-    // }
-    console.log(typeof this.state.shots)
+    // strike
+    let lastShot = this.state.shots[this.state.shots.length - 1]
+    if(num === 10 && this.state.shotCount % 2 === 0) {
+      console.log('STRIKE!')
+      this.setState({
+        shots: [...this.state.shots, num],
+        shotCount: this.state.shotCount + 1
+      }, () => this.handleStrike())
+
+    }
+
+    // spare
+
+    // not a strike or a spare
     this.setState({
       shots: [...this.state.shots, num],
-      firstShot: !this.state.firstShot,
-      initialShot: false
+      shotCount: this.state.shotCount + 1
     }, () => this.countScore())
   }
 
   countScore() {
-    console.log('engaged')
-    if(this.state.firstShot && !this.state.initialShot) {
+    console.log('count score engaged')
+    if(this.state.shotCount % 2 === 1 && this.state.shotCount !== 1) {
       let score = this.state.shots.reduce((acc, val) => acc + val);
       this.setState({
         score: [...this.state.score, score]
@@ -78,24 +78,25 @@ class App extends React.Component {
     } 
   }
 
-  handleButtonClick() {
-    let currentFrame = this.state.frame + 1;
+  resetGame() {
     this.setState({
-      frame: currentFrame
-    }, () => console.log('STATE \n', this.state))
+      shots: [],
+      score: [],
+      shotCount: 1
+    })
   }
 
   render () {
     return(
       <div>
-        <span>DISPLAY SOMETHING</span>
+        <span>Lets go BOWLING!</span>
 
         <Pins handleClick={this.handleClick} />
         <Scorecard 
           shots={this.state.shots}
           score={this.state.score}
         />
-        <button onClick={this.handleButtonClick}> click to increase frame</button>
+        <button onClick={this.resetGame}> click to reset game</button>
 
         
 
