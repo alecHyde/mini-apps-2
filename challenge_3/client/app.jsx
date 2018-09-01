@@ -10,6 +10,7 @@ class App extends React.Component {
     this.countShot = this.countShot.bind(this);
     this.isLegalShot = this.isLegalShot.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.countScore = this.countScore.bind(this)
     this.state = {
       shots: [],
       score: [],
@@ -17,13 +18,14 @@ class App extends React.Component {
       firstShot: true,
       count: 1,
       bonus: 0,
-      gameNotOver: true
+      gameNotOver: true,
+      initialShot: true
 
     }
   }
 
   handleClick(e) {
-    let bowl = e.target.innerHTML
+    let bowl = Number(e.target.innerHTML)
     if(this.isLegalShot(bowl)) {
       this.countShot(bowl)  
     } else { 
@@ -37,7 +39,8 @@ class App extends React.Component {
     } else {
       let firstShot = this.state.shots[this.state.shots.length - 1]
       console.log('firstShot', firstShot)
-      if(firstShot + num <= 10) {
+      console.log('sum', firstShot + num)
+      if(Number(firstShot) + Number(num) <= 10) {
         return true;
       } else {
         return false;
@@ -59,12 +62,21 @@ class App extends React.Component {
     // }
     console.log(typeof this.state.shots)
     this.setState({
-      shots: [...this.state.shots, num]
-    }, () => console.log('SHOTS',this.state.shots, typeof this.state.shots))
+      shots: [...this.state.shots, num],
+      firstShot: !this.state.firstShot,
+      initialShot: false
+    }, () => this.countScore())
   }
 
-  // this.setState({ myArray: [...this.state.myArray, 'new value'] }) //simple value
-
+  countScore() {
+    console.log('engaged')
+    if(this.state.firstShot && !this.state.initialShot) {
+      let score = this.state.shots.reduce((acc, val) => acc + val);
+      this.setState({
+        score: [...this.state.score, score]
+      }, () => console.log("score", this.state.score))
+    } 
+  }
 
   handleButtonClick() {
     let currentFrame = this.state.frame + 1;

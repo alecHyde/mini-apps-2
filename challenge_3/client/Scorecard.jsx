@@ -58,30 +58,30 @@ class Scorecard extends React.Component {
               <td>{this.handleShotsChange(1,1)}</td>
               <td>{this.handleShotsChange(1,2)}</td>
 
-              <td>F3S1</td>
-              <td>F3S2</td>
+              <td>{this.handleShotsChange(2,1)}</td>
+              <td>{this.handleShotsChange(2,2)}</td>
 
-              <td>F4S1</td>
-              <td>F4S2</td>
+              <td>{this.handleShotsChange(3,1)}</td>
+              <td>{this.handleShotsChange(3,2)}</td>
 
-              <td>F5S1</td>
-              <td>F5S2</td>
+              <td>{this.handleShotsChange(4,1)}</td>
+              <td>{this.handleShotsChange(4,2)}</td>
 
-              <td>F6S1</td>
-              <td>F6S2</td>
+              <td>{this.handleShotsChange(5,1)}</td>
+              <td>{this.handleShotsChange(5,2)}</td>
 
-              <td>F7S1</td>
-              <td>F7S2</td>
+              <td>{this.handleShotsChange(6,1)}</td>
+              <td>{this.handleShotsChange(6,2)}</td>
 
-              <td>F8S1</td>
-              <td>F8S2</td>
+              <td>{this.handleShotsChange(7,1)}</td>
+              <td>{this.handleShotsChange(7,2)}</td>
 
-              <td>F9S1</td>
-              <td>F9S2</td>
+              <td>{this.handleShotsChange(8,1)}</td>
+              <td>{this.handleShotsChange(8,2)}</td>
 
-              <td>F10S1</td>
-              <td>F10S2</td>
-              <td>F10S1</td>
+              <td>{this.handleShotsChange(9,1)}</td>
+              <td>{this.handleShotsChange(9,2)}</td>
+              <td>{this.handleShotsChange(9,3)}</td>
               
             </tr>
 
