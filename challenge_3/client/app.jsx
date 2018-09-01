@@ -11,41 +11,61 @@ class App extends React.Component {
     this.isLegalShot = this.isLegalShot.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.state = {
-      currentFrame: [],
+      shots: [],
+      score: [],
       frame: 1,
       firstShot: true,
-      score: 0,
       count: 1,
       bonus: 0,
+      gameNotOver: true
 
     }
   }
 
   handleClick(e) {
-    console.log('CLICKED', e.target.innerHTML)
-    if(this.isLegalShot(e.target.innerHTML)) {
-      this.countShot(e.target.innerHTML)  
+    let bowl = e.target.innerHTML
+    if(this.isLegalShot(bowl)) {
+      this.countShot(bowl)  
+    } else { 
+      window.alert(`Not a legal shot, ${bowl} rolled`)
     }
-    let shot = e.target.innerHTML
-    window.alert(`Not a legal shot, ${shot} rolled`)
-
   }
 
   isLegalShot(num) {
-    let firstShot = this.state.currentFrame[0] || 0;
-    if (firstShot + num <= 10) {
+    if(this.state.firstShot) {
       return true;
+    } else {
+      let firstShot = this.state.shots[this.state.shots.length - 1]
+      console.log('firstShot', firstShot)
+      if(firstShot + num <= 10) {
+        return true;
+      } else {
+        return false;
+      }
     }
-    return false
   }
 
 
   countShot(num) {
-    console.log('counting Shot')
-    // this.setState({
-      
-    // })
+    //need to toggle firstShot state
+    // let prevScore = this.state.score;
+    // let prevShots = this.state.shots;
+    // let newShots = null;
+    // let arr = [];
+    // if(typeof prevShots === 'object') {
+    //   newShots = prevShots.push(num);
+    // } else {
+    //   newShots = arr.push(num);
+    // }
+    console.log(typeof this.state.shots)
+    this.setState({
+      shots: [...this.state.shots, num]
+    }, () => console.log('SHOTS',this.state.shots, typeof this.state.shots))
   }
+
+  // this.setState({ myArray: [...this.state.myArray, 'new value'] }) //simple value
+
+
   handleButtonClick() {
     let currentFrame = this.state.frame + 1;
     this.setState({
@@ -60,7 +80,8 @@ class App extends React.Component {
 
         <Pins handleClick={this.handleClick} />
         <Scorecard 
-          frame={this.state.frame}
+          shots={this.state.shots}
+          score={this.state.score}
         />
         <button onClick={this.handleButtonClick}> click to increase frame</button>
 

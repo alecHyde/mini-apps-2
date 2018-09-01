@@ -5,24 +5,27 @@ class Scorecard extends React.Component {
     super(props)
 
     this.state = {
-      frame: 1,
       shots: [3,4,8,2],
+      score: [2,5,6,9,12,17]
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.frame !== prevProps.frame) {
+    if(this.props.shots !== prevProps.shots || this.props.score !== prevProps.score) {
       this.setState({
-        frame: this.props.frame
-      }, () => console.log('NEW FRAME NUMBER', this.state.frame))
+        shots: this.props.shots,
+        score: this.props.score
+      }, () => console.log('NEW FRAME NUMBER', this.state))
 
     }
   }
   
   handleShotsChange(frame, position) {
-    
-      return this.state.Shots[(frame * 2) + position - 1];
-      
+    return this.state.shots[(frame * 2) + position - 1];  
+  }
+
+  handleScoreChange(frame) {
+    return this.state.score[frame - 1];
   }
 
 
@@ -83,16 +86,16 @@ class Scorecard extends React.Component {
             </tr>
 
             <tr>
-              <td colSpan="2">score 1</td>
-              <td colSpan="2">score 2</td>
-              <td colSpan="2">score 3</td>
-              <td colSpan="2">score 4</td>
-              <td colSpan="2">score 5</td>
-              <td colSpan="2">score 6</td>
-              <td colSpan="2">score 7</td>
-              <td colSpan="2">score 8</td>
-              <td colSpan="2">score 9</td>
-              <td colSpan="3">score 10</td>
+              <td colSpan="2">{this.handleScoreChange(1)}</td>
+              <td colSpan="2">{this.handleScoreChange(2)}</td>
+              <td colSpan="2">{this.handleScoreChange(3)}</td>
+              <td colSpan="2">{this.handleScoreChange(4)}</td>
+              <td colSpan="2">{this.handleScoreChange(5)}</td>
+              <td colSpan="2">{this.handleScoreChange(6)}</td>
+              <td colSpan="2">{this.handleScoreChange(7)}</td>
+              <td colSpan="2">{this.handleScoreChange(8)}</td>
+              <td colSpan="2">{this.handleScoreChange(9)}</td>
+              <td colSpan="3">{this.handleScoreChange(10)}</td>
             </tr>
             </tbody>
           </table>
