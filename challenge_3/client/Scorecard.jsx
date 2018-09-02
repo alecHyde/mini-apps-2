@@ -15,7 +15,7 @@ class Scorecard extends React.Component {
       this.setState({
         shots: this.props.shots,
         score: this.props.score
-      }, () => console.log('NEW FRAME NUMBER', this.state))
+      })
 
     }
   }
